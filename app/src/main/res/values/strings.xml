@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Racing Car</string>
+    <string name="racing_icon_1">Racing Icon 1</string>
+    <string name="racing_flag_img">racing flag img</string>
+    <string name="playBtn">play Btn</string>
+    <string name="scoreBtn">score Btn</string>
+    <string name="settingBtn">setting Btn</string>
+</resources>
