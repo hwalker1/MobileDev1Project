@@ -1,2 +1,0 @@
-# MobileDev1Project
-Henry
