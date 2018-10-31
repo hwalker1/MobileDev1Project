@@ -5,4 +5,5 @@
     <string name="playBtn">play Btn</string>
     <string name="scoreBtn">score Btn</string>
     <string name="settingBtn">setting Btn</string>
+    <string name="car_model">car model</string>
 </resources>

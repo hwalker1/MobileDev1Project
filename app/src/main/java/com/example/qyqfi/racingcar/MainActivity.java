@@ -14,17 +14,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        playButton = (ImageButton) findViewById(R.id.imageButton2);
+        playButton = (ImageButton) findViewById(R.id.playBtn);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPlayActivity();
+                openGameActivity();
             }
         });
     }
 
-    public void openPlayActivity(){
-        Intent intent = new Intent(this, Main2Activity.class);
+    public void openGameActivity(){
+        Intent intent = new Intent(this, GameView.class);
         startActivity(intent);
     }
 }
