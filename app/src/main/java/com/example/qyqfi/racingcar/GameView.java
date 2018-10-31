@@ -17,11 +17,18 @@ public class GameView extends AppCompatActivity {
     private  int screenHeight;
 
     //Images
-    private ImageView carModel;
+    private ImageView carModelA;
+    private ImageView carModelB;
+    private ImageView carModelC;
+
 
     //Position
-    private  float carModelX;
-    private  float carModelY;
+    private  float carModelA_X;
+    private  float carModelA_Y;
+    private  float carModelB_X;
+    private  float carModelB_Y;
+    private  float carModelC_X;
+    private  float carModelC_Y;
 
     //Initialize Class
     private Handler handler = new Handler();
@@ -32,8 +39,9 @@ public class GameView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
 
-        carModel = (ImageView)findViewById(R.id.carModel);
-
+        carModelA = (ImageView)findViewById(R.id.carModelA);
+        carModelB = (ImageView)findViewById(R.id.carModelB);
+        carModelC = (ImageView)findViewById(R.id.carModelC);
         //get screen size
         WindowManager wm = getWindowManager();
         Display disp= wm.getDefaultDisplay();
@@ -42,9 +50,14 @@ public class GameView extends AppCompatActivity {
         screenWidth = size.x;
         screenHeight = size.y;
 
-        //move to out of screen
-        carModel.setX(-80.0f);
-        carModel.setY(-80.0f);
+        //set initial position
+        carModelA.setX(-50.0f);
+        carModelA.setY(-50.0f);
+        carModelB.setX(-300.0f);
+        carModelB.setY(-50.0f);
+        carModelC.setX(-150.0f);
+        carModelC.setY(-50.0f);
+
 
         timer.schedule(new TimerTask() {
             @Override
@@ -61,14 +74,34 @@ public class GameView extends AppCompatActivity {
     }
 
     public void changePos(){
-        carModelY -= 10;
-        if (carModel.getY() + carModel.getHeight() < 0){
-            carModelX = (float)Math.floor(Math.random() * (screenWidth - carModel.getWidth()));
-            carModelY = screenHeight + 100.0f;
+        //speed control
+        carModelA_Y += 10;
+        carModelB_Y += 20;
+        carModelC_Y += 15;
+
+        if (carModelA.getY() > screenHeight){
+            carModelA_X = (float)Math.floor(Math.random() * (screenWidth - carModelA.getWidth()));
+            carModelA_Y = -50.0f;
+            //carModelA_Y = screenHeight + 100.0f;
+        }
+
+        if (carModelB.getY() > screenHeight){
+            carModelB_X = (float)Math.floor(Math.random() * (screenWidth - carModelB.getWidth()));
+            carModelB_Y = -50.0f;
+        }
+
+        if (carModelC.getY() > screenHeight){
+            carModelC_X = (float)Math.floor(Math.random() * (screenWidth - carModelC.getWidth()));
+            carModelC_Y = -50.0f;
 
         }
-        carModel.setX(carModelX);
-        carModel.setY(carModelY);
+
+        carModelA.setX(carModelA_X);
+        carModelA.setY(carModelA_Y);
+        carModelB.setX(carModelB_X);
+        carModelB.setY(carModelB_Y);
+        carModelC.setX(carModelC_X);
+        carModelC.setY(carModelC_Y);
     }
 
 }
