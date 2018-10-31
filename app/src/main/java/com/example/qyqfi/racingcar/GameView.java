@@ -5,13 +5,18 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameView extends AppCompatActivity {
+    private ImageButton leftButton, rightButton;
+    private ImageView car;
+
     //Screen Size
     private int screenWidth;
     private  int screenHeight;
@@ -38,6 +43,23 @@ public class GameView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
+
+        //control main car
+        leftButton =  findViewById(R.id.leftButton);
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveLeft();
+            }
+        });
+        rightButton =  findViewById(R.id.rightButton);
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveRight();
+            }
+        });
+        car = findViewById(R.id.car);
 
         carModelA = (ImageView)findViewById(R.id.carModelA);
         carModelB = (ImageView)findViewById(R.id.carModelB);
@@ -104,4 +126,11 @@ public class GameView extends AppCompatActivity {
         carModelC.setY(carModelC_Y);
     }
 
+    public void moveLeft(){
+        car.setX((car.getX() - 50));
+    }
+
+    public void moveRight(){
+        car.setX((car.getX() + 50));
+    }
 }
