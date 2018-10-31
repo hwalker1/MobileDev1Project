@@ -7,18 +7,34 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="324dp"
-        android:layout_height="225dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
+        android:id="@+id/car"
+        android:layout_width="128dp"
+        android:layout_height="78dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
         android:contentDescription="@string/racing_flag_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/racingflagimg" />
+        app:srcCompat="@drawable/car" />
+
+    <ImageButton
+        android:id="@+id/leftButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/scoreBtn"
+        app:srcCompat="@drawable/leftbutton" />
+
+    <ImageButton
+        android:id="@+id/rightButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/leftButton"
+        android:contentDescription="@string/scoreBtn"
+        app:srcCompat="@drawable/rightbutton" />
 
 </RelativeLayout>
