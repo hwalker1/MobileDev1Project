@@ -24,6 +24,7 @@ public class GameView extends AppCompatActivity {
     public float x;
     public TextView healthBox;
     public int healthPoints = 10;
+    public int collisionFlag = 0;
 
     //Screen Size
     private int screenWidth;
@@ -115,9 +116,6 @@ public class GameView extends AppCompatActivity {
                     @Override
                     public void run() {
                         changePos();
-                        if(Collision(car, carModelA) ){ //|| Collision(car, carModelB) || Collision(car, carModelC)  ){
-                            LoseHealth();
-                        }
                     }
                 });
             }
@@ -154,6 +152,7 @@ public class GameView extends AppCompatActivity {
         carModelB.setY(carModelB_Y);
         carModelC.setX(carModelC_X);
         carModelC.setY(carModelC_Y);
+        Collision(car, carModelA);
     }
 
     public void moveLeft(){
@@ -171,10 +170,19 @@ public class GameView extends AppCompatActivity {
         Rect trafficRect = new Rect();
         traffic.getHitRect(trafficRect);
         //return Rect.intersects(carRect, trafficRect);
+
+        if(carRect.intersect(trafficRect) && collisionFlag == 0) {
+            LoseHealth();
+            collisionFlag = 1;
+        }
+        if(!carRect.intersect(trafficRect) && collisionFlag == 1){
+            collisionFlag = 0;
+        }
         return carRect.intersect(trafficRect);
     }
 
     public void LoseHealth(){
+
         healthPoints--;
         Toast.makeText(getApplicationContext(), "Lives left " + Integer.toString(healthPoints), Toast.LENGTH_SHORT).show();
     }
