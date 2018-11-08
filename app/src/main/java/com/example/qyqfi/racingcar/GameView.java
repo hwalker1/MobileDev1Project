@@ -1,14 +1,19 @@
 package com.example.qyqfi.racingcar;
 
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,6 +21,10 @@ import java.util.TimerTask;
 public class GameView extends AppCompatActivity {
     private ImageButton leftButton, rightButton;
     private ImageView car;
+    public float x;
+    public TextView healthBox;
+    public int healthPoints = 10;
+    public int collisionFlag = 0;
 
     //Screen Size
     private int screenWidth;
@@ -46,20 +55,39 @@ public class GameView extends AppCompatActivity {
 
         //control main car
         leftButton =  findViewById(R.id.leftButton);
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        leftButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                moveLeft();
+            public boolean onTouch(View v, MotionEvent event) {
+                if(car.getX() > -50){
+                    moveLeft();
+                }
+                return false;
             }
         });
         rightButton =  findViewById(R.id.rightButton);
-        rightButton.setOnClickListener(new View.OnClickListener() {
+        rightButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                moveRight();
+            public boolean onTouch(View v, MotionEvent event) {
+                if(car.getX() < 700){
+                    moveRight();
+                }
+                return false;
             }
         });
         car = findViewById(R.id.car);
+       /* car.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {  //TODO swipe to move car between lanes
+                x = event.getX();
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    car.setX(x);
+                }
+                return true;
+            }
+        });*/
+
+
 
         carModelA = (ImageView)findViewById(R.id.carModelA);
         carModelB = (ImageView)findViewById(R.id.carModelB);
@@ -124,6 +152,7 @@ public class GameView extends AppCompatActivity {
         carModelB.setY(carModelB_Y);
         carModelC.setX(carModelC_X);
         carModelC.setY(carModelC_Y);
+        Collision(car, carModelA);
     }
 
     public void moveLeft(){
@@ -132,5 +161,29 @@ public class GameView extends AppCompatActivity {
 
     public void moveRight(){
         car.setX((car.getX() + 50));
+    }
+
+    public boolean Collision(ImageView car, ImageView traffic)
+    {
+        Rect carRect = new Rect();
+        car.getHitRect(carRect);
+        Rect trafficRect = new Rect();
+        traffic.getHitRect(trafficRect);
+        //return Rect.intersects(carRect, trafficRect);
+
+        if(carRect.intersect(trafficRect) && collisionFlag == 0) {
+            LoseHealth();
+            collisionFlag = 1;
+        }
+        if(!carRect.intersect(trafficRect) && collisionFlag == 1){
+            collisionFlag = 0;
+        }
+        return carRect.intersect(trafficRect);
+    }
+
+    public void LoseHealth(){
+
+        healthPoints--;
+        Toast.makeText(getApplicationContext(), "Lives left " + Integer.toString(healthPoints), Toast.LENGTH_SHORT).show();
     }
 }
