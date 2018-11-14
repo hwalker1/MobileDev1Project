@@ -1,3 +1,5 @@
+//deprecated activity
+
 package com.example.qyqfi.racingcar;
 
 import android.content.Intent;

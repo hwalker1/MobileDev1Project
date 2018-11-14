@@ -1,55 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/carModelA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/car_model1" />
-    <ImageView
-        android:id="@+id/carModelB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/car_model2" />
-    <ImageView
-        android:id="@+id/carModelC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/car_model" />
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="50dp" />
 
-    <ImageView
-        android:id="@+id/car"
-        android:layout_width="128dp"
-        android:layout_height="78dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
-        android:contentDescription="@string/racing_flag_img"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/car" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/leftButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:contentDescription="@string/scoreBtn"
-        app:srcCompat="@drawable/leftbutton" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/rightButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/leftButton"
-        android:contentDescription="@string/scoreBtn"
-        app:srcCompat="@drawable/rightbutton" />
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/carModelA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/carModelB"
+                android:src="@drawable/car_model1" />
+
+            <ImageView
+                android:id="@+id/carModelB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/car_model2" />
+
+            <ImageView
+                android:id="@+id/carModelC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/carModelB"
+                android:src="@drawable/car_model" />
+
+            <ImageView
+                android:id="@+id/car"
+                android:layout_width="128dp"
+                android:layout_height="78dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="27dp"
+                android:contentDescription="@string/racing_flag_img"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/car" />
+
+            <ImageButton
+                android:id="@+id/leftButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/scoreBtn"
+                app:srcCompat="@drawable/leftbutton" />
+
+            <ImageButton
+                android:id="@+id/rightButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/scoreBtn"
+                app:srcCompat="@drawable/rightbutton" />
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

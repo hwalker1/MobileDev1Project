@@ -52,8 +52,6 @@ public class GameView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
 
-
-
         //control main car
         leftButton =  findViewById(R.id.leftButton);
         leftButton.setOnTouchListener(new View.OnTouchListener() {
@@ -90,8 +88,6 @@ public class GameView extends AppCompatActivity {
             }
         });*/
 
-
-
         carModelA = (ImageView)findViewById(R.id.carModelA);
         carModelB = (ImageView)findViewById(R.id.carModelB);
         carModelC = (ImageView)findViewById(R.id.carModelC);
@@ -105,11 +101,11 @@ public class GameView extends AppCompatActivity {
 
         //set initial position
         carModelA.setX(-50.0f);
-        carModelA.setY(-50.0f);
-        carModelB.setX(-300.0f);
-        carModelB.setY(-50.0f);
-        carModelC.setX(-150.0f);
-        carModelC.setY(-50.0f);
+        carModelA.setY(screenHeight+50.0f);
+        carModelB.setX(-50.0f);
+        carModelB.setY(screenHeight+50.0f);
+        carModelC.setX(-50.0f);
+        carModelC.setY(screenHeight+50.0f);
 
 
         timer.schedule(new TimerTask() {
@@ -183,7 +179,6 @@ public class GameView extends AppCompatActivity {
         if(!carRect.intersect(trafficRect) && collisionFlag == 1){  //only works for single car
             collisionFlag = 0;
         }
-
 
         return carRect.intersect(trafficRect);
     }
