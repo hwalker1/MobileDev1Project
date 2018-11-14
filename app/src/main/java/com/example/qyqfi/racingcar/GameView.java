@@ -22,8 +22,7 @@ import java.util.TimerTask;
 public class GameView extends AppCompatActivity {
     private ImageButton leftButton, rightButton;
     private ImageView car;
-    public int healthPoints = 2;
-    public int collisionFlag = 0;
+    public int healthPoints = 10;
 
     //Screen Size
     private int screenWidth;
@@ -34,7 +33,6 @@ public class GameView extends AppCompatActivity {
     private ImageView carModelB;
     private ImageView carModelC;
 
-
     //Position
     private  float carModelA_X;
     private  float carModelA_Y;
@@ -42,6 +40,11 @@ public class GameView extends AppCompatActivity {
     private  float carModelB_Y;
     private  float carModelC_X;
     private  float carModelC_Y;
+
+    //Collision Detection
+    public boolean carModelA_col = true;
+    public boolean carModelB_col = true;
+    public boolean carModelC_col = true;
 
     //Initialize Class
     private Handler handler = new Handler();
@@ -57,8 +60,6 @@ public class GameView extends AppCompatActivity {
         leftButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-
                 if(car.getX() > -50){
                     moveLeft();
                 }
@@ -91,6 +92,7 @@ public class GameView extends AppCompatActivity {
         carModelA = (ImageView)findViewById(R.id.carModelA);
         carModelB = (ImageView)findViewById(R.id.carModelB);
         carModelC = (ImageView)findViewById(R.id.carModelC);
+
         //get screen size
         WindowManager wm = getWindowManager();
         Display disp= wm.getDefaultDisplay();
@@ -107,7 +109,6 @@ public class GameView extends AppCompatActivity {
         carModelC.setX(-50.0f);
         carModelC.setY(screenHeight+50.0f);
 
-
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -119,7 +120,6 @@ public class GameView extends AppCompatActivity {
                 });
             }
         }, 0 , 20);
-
     }
 
     public void changePos(){
@@ -131,18 +131,19 @@ public class GameView extends AppCompatActivity {
         if (carModelA.getY() > screenHeight){
             carModelA_X = (float)Math.floor(Math.random() * (screenWidth - carModelA.getWidth()));
             carModelA_Y = -50.0f;
-            //carModelA_Y = screenHeight + 100.0f;
+            carModelA_col = true;  //reset collide when it reaches bottom of screen and resets
         }
 
         if (carModelB.getY() > screenHeight){
             carModelB_X = (float)Math.floor(Math.random() * (screenWidth - carModelB.getWidth()));
             carModelB_Y = -50.0f;
+            carModelB_col = true;
         }
 
         if (carModelC.getY() > screenHeight){
             carModelC_X = (float)Math.floor(Math.random() * (screenWidth - carModelC.getWidth()));
             carModelC_Y = -50.0f;
-
+            carModelC_col = true;
         }
 
         carModelA.setX(carModelA_X);
@@ -152,9 +153,19 @@ public class GameView extends AppCompatActivity {
         carModelC.setX(carModelC_X);
         carModelC.setY(carModelC_Y);
 
-        Collision(car, carModelA);
-        //Collision(car, carModelB);
-        //Collision(car, carModelC);
+        //if collide with car and its collidable then losehealth
+        if(Collision(car, carModelA, carModelA_col)){
+            LoseHealth();
+            carModelA_col = false;
+        }
+        if(Collision(car, carModelB, carModelB_col)){
+            LoseHealth();
+            carModelB_col = false;
+        }
+        if(Collision(car, carModelC, carModelC_col)){
+            LoseHealth();
+            carModelC_col = false;
+        }
     }
 
     public void moveLeft(){
@@ -165,22 +176,19 @@ public class GameView extends AppCompatActivity {
         car.setX((car.getX() + 50));
     }
 
-    public boolean Collision(ImageView car, ImageView traffic)
+    public boolean Collision(ImageView car, ImageView traffic, boolean collidable ) //todo fix multithread problem (still lose health on quit screen)
     {
         Rect carRect = new Rect();
         car.getHitRect(carRect);
         Rect trafficRect = new Rect();
         traffic.getHitRect(trafficRect);
 
-        if(carRect.intersect(trafficRect) && collisionFlag == 0) {
-            LoseHealth();
-            collisionFlag = 1;
+        if(carRect.intersect(trafficRect) && collidable) {
+            return true;
         }
-        if(!carRect.intersect(trafficRect) && collisionFlag == 1){  //only works for single car
-            collisionFlag = 0;
+        else{
+            return false;
         }
-
-        return carRect.intersect(trafficRect);
     }
 
     public void LoseHealth(){
