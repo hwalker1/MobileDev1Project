@@ -20,9 +20,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameView extends AppCompatActivity {
+
     private ImageButton leftButton, rightButton;
     private ImageView car;
-    public int healthPoints = 2;
+
+    //Life count & Score
+    public int healthPoints = 3;
+    private int score = 0;
+
     public int collisionFlag = 0;
 
     //Screen Size
@@ -34,6 +39,8 @@ public class GameView extends AppCompatActivity {
     private ImageView carModelB;
     private ImageView carModelC;
 
+    //Text
+    private TextView scoreText;
 
     //Position
     private  float carModelA_X;
@@ -52,12 +59,16 @@ public class GameView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
 
+
+        //**************************************************************
+        //Maybe onTouchListener should not be set in onCreate fun?
+        //--William
+        //**************************************************************
         //control main car
         leftButton =  findViewById(R.id.leftButton);
         leftButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
 
                 if(car.getX() > -50){
                     moveLeft();
@@ -88,6 +99,8 @@ public class GameView extends AppCompatActivity {
             }
         });*/
 
+       scoreText = (TextView)findViewById(R.id.score_text);
+
         carModelA = (ImageView)findViewById(R.id.carModelA);
         carModelB = (ImageView)findViewById(R.id.carModelB);
         carModelC = (ImageView)findViewById(R.id.carModelC);
@@ -106,7 +119,8 @@ public class GameView extends AppCompatActivity {
         carModelB.setY(screenHeight+50.0f);
         carModelC.setX(-50.0f);
         carModelC.setY(screenHeight+50.0f);
-
+        //set initial score
+        scoreText.setText(""+score);
 
         timer.schedule(new TimerTask() {
             @Override
@@ -152,11 +166,16 @@ public class GameView extends AppCompatActivity {
         carModelC.setX(carModelC_X);
         carModelC.setY(carModelC_Y);
 
-        Collision(car, carModelA);
+        setScore();
+        collision(car, carModelA);
         //Collision(car, carModelB);
         //Collision(car, carModelC);
     }
 
+    public void setScore(){
+        score++;
+        scoreText.setText("" + score/100);
+    }
     public void moveLeft(){
         car.setX((car.getX() - 50));
     }
@@ -165,7 +184,7 @@ public class GameView extends AppCompatActivity {
         car.setX((car.getX() + 50));
     }
 
-    public boolean Collision(ImageView car, ImageView traffic)
+    public boolean collision(ImageView car, ImageView traffic)
     {
         Rect carRect = new Rect();
         car.getHitRect(carRect);
