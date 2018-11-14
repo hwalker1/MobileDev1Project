@@ -10,12 +10,12 @@
         android:id="@+id/carModelA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/car_model2" />
+        android:src="@drawable/car_model1" />
     <ImageView
         android:id="@+id/carModelB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/car_model" />
+        android:src="@drawable/car_model2" />
     <ImageView
         android:id="@+id/carModelC"
         android:layout_width="wrap_content"

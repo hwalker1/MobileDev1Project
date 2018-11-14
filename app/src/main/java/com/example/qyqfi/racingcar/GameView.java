@@ -1,5 +1,6 @@
 package com.example.qyqfi.racingcar;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -21,9 +22,7 @@ import java.util.TimerTask;
 public class GameView extends AppCompatActivity {
     private ImageButton leftButton, rightButton;
     private ImageView car;
-    public float x;
-    public TextView healthBox;
-    public int healthPoints = 10;
+    public int healthPoints = 2;
     public int collisionFlag = 0;
 
     //Screen Size
@@ -53,11 +52,15 @@ public class GameView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
 
+
+
         //control main car
         leftButton =  findViewById(R.id.leftButton);
         leftButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
+
                 if(car.getX() > -50){
                     moveLeft();
                 }
@@ -152,7 +155,10 @@ public class GameView extends AppCompatActivity {
         carModelB.setY(carModelB_Y);
         carModelC.setX(carModelC_X);
         carModelC.setY(carModelC_Y);
+
         Collision(car, carModelA);
+        //Collision(car, carModelB);
+        //Collision(car, carModelC);
     }
 
     public void moveLeft(){
@@ -169,21 +175,29 @@ public class GameView extends AppCompatActivity {
         car.getHitRect(carRect);
         Rect trafficRect = new Rect();
         traffic.getHitRect(trafficRect);
-        //return Rect.intersects(carRect, trafficRect);
 
         if(carRect.intersect(trafficRect) && collisionFlag == 0) {
             LoseHealth();
             collisionFlag = 1;
         }
-        if(!carRect.intersect(trafficRect) && collisionFlag == 1){
+        if(!carRect.intersect(trafficRect) && collisionFlag == 1){  //only works for single car
             collisionFlag = 0;
         }
+
+
         return carRect.intersect(trafficRect);
     }
 
     public void LoseHealth(){
-
         healthPoints--;
         Toast.makeText(getApplicationContext(), "Lives left " + Integer.toString(healthPoints), Toast.LENGTH_SHORT).show();
+        if(healthPoints == 0 ) {
+           openQuitActivity();
+        }
+    }
+
+    public void openQuitActivity(){
+        Intent intent = new Intent(this, QuitActivity.class);
+        startActivity(intent);
     }
 }

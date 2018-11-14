@@ -1,18 +1,17 @@
 package com.example.qyqfi.racingcar;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity {
+public class QuitActivity extends AppCompatActivity {
     private ImageButton playButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_quit);
 
         playButton = (ImageButton) findViewById(R.id.playBtn);
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openGameActivity(){
-        Intent intent = new Intent(this,  GameView.class);
+        Intent intent = new Intent(this, GameView.class);
         startActivity(intent);
     }
 }
