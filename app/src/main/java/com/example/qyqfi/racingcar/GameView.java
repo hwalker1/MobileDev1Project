@@ -214,6 +214,8 @@ public class GameView extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Lives left " + Integer.toString(healthPoints), Toast.LENGTH_SHORT).show();
         switch (healthPoints){
             case 0:
+                timer.cancel();
+                timer = null;
                 openQuitActivity();
                 break;
             case 1:
