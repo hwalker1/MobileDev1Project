@@ -38,6 +38,9 @@ public class GameView extends AppCompatActivity {
     private ImageView carModelA;
     private ImageView carModelB;
     private ImageView carModelC;
+    private ImageView fuel_life_1;
+    private ImageView fuel_life_2;
+    private ImageView fuel_life_3;
 
     //Text
     private TextView scoreText;
@@ -104,6 +107,10 @@ public class GameView extends AppCompatActivity {
         carModelA = (ImageView)findViewById(R.id.carModelA);
         carModelB = (ImageView)findViewById(R.id.carModelB);
         carModelC = (ImageView)findViewById(R.id.carModelC);
+        fuel_life_1 = (ImageView)findViewById(R.id.fuel_life_1);
+        fuel_life_2 = (ImageView)findViewById(R.id.fuel_life_2);
+        fuel_life_3 = (ImageView)findViewById(R.id.fuel_life_3);
+
         //get screen size
         WindowManager wm = getWindowManager();
         Display disp= wm.getDefaultDisplay();
@@ -205,6 +212,19 @@ public class GameView extends AppCompatActivity {
     public void LoseHealth(){
         healthPoints--;
         Toast.makeText(getApplicationContext(), "Lives left " + Integer.toString(healthPoints), Toast.LENGTH_SHORT).show();
+        switch (healthPoints){
+            case 0:
+                openQuitActivity();
+                break;
+            case 1:
+                fuel_life_2.setVisibility(View.INVISIBLE);
+                fuel_life_3.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                fuel_life_3.setVisibility(View.INVISIBLE);
+                break;
+        }
+
         if(healthPoints == 0 ) {
            openQuitActivity();
         }
