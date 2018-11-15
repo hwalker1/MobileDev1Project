@@ -234,6 +234,7 @@ public class GameView extends AppCompatActivity {
 
     public void openQuitActivity(){
         Intent intent = new Intent(this, QuitActivity.class);
+        finish();
         startActivity(intent);
     }
 }
