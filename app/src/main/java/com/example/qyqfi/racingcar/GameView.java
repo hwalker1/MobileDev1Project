@@ -1,11 +1,18 @@
 package com.example.qyqfi.racingcar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.nfc.Tag;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,8 +26,14 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameView extends AppCompatActivity {
+public class GameView extends AppCompatActivity implements SensorEventListener {
 
+    private static final String TAG = "GameViewActivity";
+
+    private SensorManager sensorManager;
+    Sensor accelerometer;
+
+    //control btn
     private ImageButton leftButton, rightButton;
     private ImageView car;
 
@@ -28,6 +41,7 @@ public class GameView extends AppCompatActivity {
     public int healthPoints = 3;
     public int score = 0;
 
+    //collision flag
     public int collisionFlag = 0;
 
     //Screen Size
@@ -61,6 +75,14 @@ public class GameView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
+
+        //accelerometer sensor
+        Log.d(TAG, "onCreate: Initializing Sensor Services");
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(GameView.this, accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+        Log.d(TAG,"onCreate: Registered accelerometer listener");
 
         //control main car
         leftButton =  findViewById(R.id.leftButton);
@@ -138,6 +160,16 @@ public class GameView extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i){
+
+    }
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent){
+        Log.d(TAG,"onSensorChanged: X:" + sensorEvent.values[0]+" Y:"+sensorEvent.values[1]+" Z:"+sensorEvent.values[2]);
+    }
+
+    //change model cars position
     public void changePos(){
         //speed control
         carModelA_Y += 10;
@@ -174,6 +206,7 @@ public class GameView extends AppCompatActivity {
         //Collision(car, carModelC);
     }
 
+    //repeat add 1 to score every 20 milliseconds
     public void setScore(){
         score++;
         scoreText.setText("" + score/100);
