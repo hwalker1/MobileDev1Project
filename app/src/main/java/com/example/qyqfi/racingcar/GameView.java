@@ -26,7 +26,7 @@ public class GameView extends AppCompatActivity {
 
     //Life count & Score
     public int healthPoints = 3;
-    private int score = 0;
+    public int score = 0;
 
     public int collisionFlag = 0;
 
@@ -62,11 +62,6 @@ public class GameView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
 
-
-        //**************************************************************
-        //Maybe onTouchListener should not be set in onCreate fun?
-        //--William
-        //**************************************************************
         //control main car
         leftButton =  findViewById(R.id.leftButton);
         leftButton.setOnTouchListener(new View.OnTouchListener() {
@@ -233,7 +228,9 @@ public class GameView extends AppCompatActivity {
     }
 
     public void openQuitActivity(){
+        String scoreValue = scoreText.getText().toString();
         Intent intent = new Intent(this, QuitActivity.class);
+        intent.putExtra("SCORE",scoreValue);
         finish();
         startActivity(intent);
     }
