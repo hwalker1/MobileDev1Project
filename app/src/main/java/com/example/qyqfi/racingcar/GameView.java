@@ -105,7 +105,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                if(car.getX() > -50){
+                if(car.getX() > 175){
                     moveLeft();
                 }
                 return false;
@@ -115,7 +115,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         rightButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(car.getX() < 700){
+                if(car.getX() < 750){
                     moveRight();
                 }
                 return false;
@@ -214,27 +214,32 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         //if lives < 3 spawn it
         if(healthPoints < 3) {
             if (carModelHealth.getY() > screenHeight) {
-                carModelHealth_X = (float) Math.floor(Math.random() * (screenWidth - carModelHealth.getWidth()));
+                //carModelHealth_X = (float) Math.floor(Math.random() * (screenWidth - carModelHealth.getWidth()));
+                carModelHealth_X = (float) (Math.random() * 575) + 175;
                 carModelHealth_Y = -50.0f;
                 carModelHealth_col = true;
             }
         }
 
         if (carModelA.getY() > screenHeight){
-            carModelA_X = (float)Math.floor(Math.random() * (screenWidth - carModelA.getWidth()));
+            //carModelA_X = (float)Math.floor(Math.random() * (screenWidth - carModelA.getWidth()));
+            carModelA_X = (float) (Math.random() * 575) + 175;
+
             carModelA_Y = -50.0f;
             //carModelA_Y = screenHeight + 100.0f;
             carModelA_col = true;
         }
 
         if (carModelB.getY() > screenHeight){
-            carModelB_X = (float)Math.floor(Math.random() * (screenWidth - carModelB.getWidth()));
+            //carModelB_X = (float)Math.floor(Math.random() * (screenWidth - carModelB.getWidth()));
+            carModelB_X = (float) (Math.random() * 575) + 175;
             carModelB_Y = -50.0f;
             carModelB_col = true;
         }
 
         if (carModelC.getY() > screenHeight){
-            carModelC_X = (float)Math.floor(Math.random() * (screenWidth - carModelC.getWidth()));
+            //carModelC_X = (float)Math.floor(Math.random() * (screenWidth - carModelC.getWidth()));
+            carModelC_X = (float) (Math.random() * 575) + 175;
             carModelC_Y = -50.0f;
             carModelC_col = true;
 
