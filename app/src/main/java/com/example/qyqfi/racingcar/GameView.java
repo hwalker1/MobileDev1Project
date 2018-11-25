@@ -2,8 +2,10 @@ package com.example.qyqfi.racingcar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -66,6 +68,9 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     private  float carModelB_Y;
     private  float carModelC_X;
     private  float carModelC_Y;
+
+    //imageView car width
+    private int car_width = 128;
 
     //Initialize Class
     private Handler handler = new Handler();
@@ -166,7 +171,16 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     }
     @Override
     public void onSensorChanged(SensorEvent sensorEvent){
-        Log.d(TAG,"onSensorChanged: X:" + sensorEvent.values[0]+" Y:"+sensorEvent.values[1]+" Z: "+sensorEvent.values[2]);
+       // Log.d(TAG,"onSensorChanged: X:" + sensorEvent.values[0]+" Y:"+sensorEvent.values[1]+" Z: "+sensorEvent.values[2]);
+        float car_X = car.getX();
+        if(sensorEvent.values[0]< -4 && car_X + car_width+ 280 <= screenWidth){
+            car.setX(car.getX()+50);
+
+        }else if(sensorEvent.values[0]> 4 && car_X >= 0){
+            car.setX(car.getX()-50);
+        }
+
+        Log.d(TAG,"car X:"+ car_X + "car width: "+ car_width);
     }
 
     //change model cars position
