@@ -14,6 +14,7 @@ import android.nfc.Tag;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -48,7 +49,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
 
     //Screen Size
     private int screenWidth;
-    private  int screenHeight;
+    private int screenHeight;
 
     //Images
     private ImageView carModelA;
@@ -71,7 +72,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
 
     //imageView car width
     private int car_width = 128;
-
+    private int car_height = 80;
     //Initialize Class
     private Handler handler = new Handler();
     private Timer timer = new Timer();
@@ -171,16 +172,23 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     }
     @Override
     public void onSensorChanged(SensorEvent sensorEvent){
-       // Log.d(TAG,"onSensorChanged: X:" + sensorEvent.values[0]+" Y:"+sensorEvent.values[1]+" Z: "+sensorEvent.values[2]);
-        float car_X = car.getX();
-        if(sensorEvent.values[0]< -4 && car_X + car_width+ 280 <= screenWidth){
-            car.setX(car.getX()+50);
+        Log.d(TAG,"onSensorChanged: X:" + sensorEvent.values[0]+" Y:"+sensorEvent.values[1]+" Z: "+sensorEvent.values[2]);
 
-        }else if(sensorEvent.values[0]> 4 && car_X >= 0){
-            car.setX(car.getX()-50);
+        float car_X = car.getX();
+        float car_Y = car.getY();
+
+        //turning screen controls car's motion
+        if(sensorEvent.values[0] < -4 && car_X + car_width + 280 <= screenWidth){
+            car.setX(car_X + 50);
+        }else if(sensorEvent.values[0] > 4 && car_X >= 0){
+            car.setX(car_X - 50);
+        }else if(sensorEvent.values[1] < -2 && car_Y - 50 >= 0){
+            car.setY(car_Y - 50);
+        }else if(sensorEvent.values[1] > 2 && car_Y + car_height + 350 <= screenHeight){
+            car.setY(car_Y + 50);
         }
 
-        Log.d(TAG,"car X:"+ car_X + "car width: "+ car_width);
+        //Log.d(TAG,"car Y:"+ car_Y + " height: "+ screenHeight);
     }
 
     //change model cars position
