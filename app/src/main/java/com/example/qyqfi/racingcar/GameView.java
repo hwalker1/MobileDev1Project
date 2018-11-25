@@ -86,7 +86,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(GameView.this, accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(GameView.this, accelerometer,SensorManager.SENSOR_DELAY_GAME);
         Log.d(TAG,"onCreate: Registered accelerometer listener");
 
         //control main car
