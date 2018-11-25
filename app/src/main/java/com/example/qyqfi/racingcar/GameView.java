@@ -51,6 +51,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     public boolean carModelA_col = true;
     public boolean carModelB_col = true;
     public boolean carModelC_col = true;
+    public boolean carModelHealth_col = true;
 
     //Screen Size
     private int screenWidth;
@@ -60,6 +61,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     private ImageView carModelA;
     private ImageView carModelB;
     private ImageView carModelC;
+    private ImageView carModelHealth;
     private ImageView fuel_life_1;
     private ImageView fuel_life_2;
     private ImageView fuel_life_3;
@@ -74,6 +76,8 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     private  float carModelB_Y;
     private  float carModelC_X;
     private  float carModelC_Y;
+    private  float carModelHealth_Y;
+    private  float carModelHealth_X;
 
     //imageView car width
     private int car_width = 128;
@@ -135,6 +139,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         carModelA = (ImageView)findViewById(R.id.carModelA);
         carModelB = (ImageView)findViewById(R.id.carModelB);
         carModelC = (ImageView)findViewById(R.id.carModelC);
+        carModelHealth = (ImageView)findViewById(R.id.carModelHealth);
         fuel_life_1 = (ImageView)findViewById(R.id.fuel_life_1);
         fuel_life_2 = (ImageView)findViewById(R.id.fuel_life_2);
         fuel_life_3 = (ImageView)findViewById(R.id.fuel_life_3);
@@ -154,6 +159,8 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         carModelB.setY(screenHeight+50.0f);
         carModelC.setX(-50.0f);
         carModelC.setY(screenHeight+50.0f);
+        carModelHealth.setX(-50.0f);
+        carModelHealth.setY(screenHeight+50.0f);
         //set initial score
         scoreText.setText(""+score);
 
@@ -202,6 +209,16 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         carModelA_Y += 10;
         carModelB_Y += 20;
         carModelC_Y += 15;
+        carModelHealth_Y += 5;
+
+        //if lives < 3 spawn it
+        if(healthPoints < 3) {
+            if (carModelHealth.getY() > screenHeight) {
+                carModelHealth_X = (float) Math.floor(Math.random() * (screenWidth - carModelHealth.getWidth()));
+                carModelHealth_Y = -50.0f;
+                carModelHealth_col = true;
+            }
+        }
 
         if (carModelA.getY() > screenHeight){
             carModelA_X = (float)Math.floor(Math.random() * (screenWidth - carModelA.getWidth()));
@@ -229,6 +246,8 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         carModelB.setY(carModelB_Y);
         carModelC.setX(carModelC_X);
         carModelC.setY(carModelC_Y);
+        carModelHealth.setX(carModelHealth_X);
+        carModelHealth.setY(carModelHealth_Y);
 
         setScore();
 
@@ -245,7 +264,10 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
             LoseHealth();
             carModelC_col = false;
         }
-
+        if(Collision(car, carModelHealth, carModelHealth_col)){
+            gainHealth();
+            carModelHealth_col = false;
+        }
         //collision(car, carModelA);
         //Collision(car, carModelB);
         //Collision(car, carModelC);
@@ -264,24 +286,6 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         car.setX((car.getX() + 35));
     }
 
-    /*public boolean collision(ImageView car, ImageView traffic) //old only works with 1 car
-    {
-        Rect carRect = new Rect();
-        car.getHitRect(carRect);
-        Rect trafficRect = new Rect();
-        traffic.getHitRect(trafficRect);
-
-        if(carRect.intersect(trafficRect) && collisionFlag == 0) {
-            LoseHealth();
-            collisionFlag = 1;
-        }
-        if(!carRect.intersect(trafficRect) && collisionFlag == 1){  //only works for single car
-            collisionFlag = 0;
-        }
-
-        return carRect.intersect(trafficRect);
-    }*/
-
     public boolean Collision(ImageView car, ImageView traffic, boolean collidable ) //todo fix multithread problem (still lose health on quit screen)
     {
         Rect carRect = new Rect();
@@ -297,9 +301,19 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         }
     }
 
+    public void gainHealth(){
+        healthPoints++;
+        Toast.makeText(getApplicationContext(), "Gained a life! Lives left " + Integer.toString(healthPoints), Toast.LENGTH_SHORT).show();
+        updateHealth(healthPoints);
+    }
+
     public void LoseHealth(){
         healthPoints--;
         Toast.makeText(getApplicationContext(), "Lives left " + Integer.toString(healthPoints), Toast.LENGTH_SHORT).show();
+        updateHealth(healthPoints);
+    }
+
+    public void updateHealth( int healthPoints){
         switch (healthPoints){
             case 0:
                 timer.cancel();
@@ -307,18 +321,27 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
                 openQuitActivity();
                 break;
             case 1:
+                fuel_life_1.setVisibility(View.VISIBLE);
                 fuel_life_2.setVisibility(View.INVISIBLE);
                 fuel_life_3.setVisibility(View.INVISIBLE);
                 break;
             case 2:
+                fuel_life_1.setVisibility(View.VISIBLE);
+                fuel_life_2.setVisibility(View.VISIBLE);
                 fuel_life_3.setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                fuel_life_1.setVisibility(View.VISIBLE);
+                fuel_life_2.setVisibility(View.VISIBLE);
+                fuel_life_3.setVisibility(View.VISIBLE);
                 break;
         }
 
         if(healthPoints == 0 ) {
-           openQuitActivity();
+            openQuitActivity();
         }
     }
+
 
     public void openQuitActivity(){
         String scoreValue = scoreText.getText().toString();

@@ -130,6 +130,14 @@
                 android:src="@drawable/car_model3" />
 
             <ImageView
+                android:id="@+id/carModelHealth"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/fuel_life" />
+
+            <ImageView
                 android:id="@+id/car"
                 android:layout_width="48dp"
                 android:layout_height="78dp"
