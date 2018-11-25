@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class QuitActivity extends AppCompatActivity {
+
+    private TextView score_tv;
     private ImageButton playButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +23,15 @@ public class QuitActivity extends AppCompatActivity {
                 openGameActivity();
             }
         });
+
+        //set text to Score TextView
+        score_tv = (TextView) findViewById(R.id.score_textView);
+        score_tv.setText("Score: "+getIntent().getStringExtra("SCORE"));
     }
 
     public void openGameActivity(){
         Intent intent = new Intent(this, GameView.class);
+        finish();
         startActivity(intent);
     }
 }
