@@ -166,7 +166,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     }
     @Override
     public void onSensorChanged(SensorEvent sensorEvent){
-        Log.d(TAG,"onSensorChanged: X:" + sensorEvent.values[0]+" Y:"+sensorEvent.values[1]+" Z:"+sensorEvent.values[2]);
+        Log.d(TAG,"onSensorChanged: X:" + sensorEvent.values[0]+" Y:"+sensorEvent.values[1]+" Z: "+sensorEvent.values[2]);
     }
 
     //change model cars position
