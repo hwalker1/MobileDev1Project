@@ -257,11 +257,11 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         scoreText.setText("" + score/100);
     }
     public void moveLeft(){
-        car.setX((car.getX() - 50));
+        car.setX((car.getX() - 35));
     }
 
     public void moveRight(){
-        car.setX((car.getX() + 50));
+        car.setX((car.getX() + 35));
     }
 
     /*public boolean collision(ImageView car, ImageView traffic) //old only works with 1 car

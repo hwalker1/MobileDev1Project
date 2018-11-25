@@ -14,6 +14,9 @@
         android:orientation="horizontal">
 
 
+
+
+
         <ImageView
             android:id="@+id/fuel"
             android:layout_width="wrap_content"
@@ -94,6 +97,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+            <ImageView
+                android:id="@+id/road"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/road" />
+
+
             <ImageView
                 android:id="@+id/carModelA"
                 android:layout_width="wrap_content"
@@ -116,20 +127,20 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/carModelB"
-                android:src="@drawable/car_model" />
+                android:src="@drawable/car_model3" />
 
             <ImageView
                 android:id="@+id/car"
-                android:layout_width="128dp"
+                android:layout_width="48dp"
                 android:layout_height="78dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="27dp"
+                android:layout_marginBottom="73dp"
                 android:contentDescription="@string/racing_flag_img"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/car" />
+                app:srcCompat="@drawable/car_model" />
 
             <ImageButton
                 android:id="@+id/leftButton"
@@ -139,6 +150,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/scoreBtn"
+                android:alpha="0.5"
                 app:srcCompat="@drawable/leftbutton" />
 
             <ImageButton
@@ -147,6 +159,7 @@
                 android:layout_height="80dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:alpha="0.5"
                 android:contentDescription="@string/scoreBtn"
                 app:srcCompat="@drawable/rightbutton" />
         </RelativeLayout>
