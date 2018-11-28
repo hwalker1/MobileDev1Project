@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton playButton;
+    private ImageButton highScoreButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +22,23 @@ public class MainActivity extends AppCompatActivity {
                 openGameActivity();
             }
         });
+
+        highScoreButton = (ImageButton) findViewById(R.id.showScoreBtn);
+        highScoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openHighScoreActivity();
+            }
+        });
     }
 
     public void openGameActivity(){
         Intent intent = new Intent(this,  GameView.class);
+        startActivity(intent);
+    }
+
+    public void openHighScoreActivity() {
+        Intent intent = new Intent(this, HighscoreMain.class);
         startActivity(intent);
     }
 }
