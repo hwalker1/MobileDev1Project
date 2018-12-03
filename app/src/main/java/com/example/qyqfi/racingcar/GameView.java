@@ -21,8 +21,10 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,9 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
 
     private static final String TAG = "GameViewActivity";
 
+
+    //gyro enable
+    private CheckBox gyroEnable;
 
     //Audio Stuff
     private MediaPlayer songPlayer, crashPlayer, gasPlayer;
@@ -95,6 +100,8 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
+
+        gyroEnable = findViewById(R.id.GyroEnabler);
 
         //Background music
         songPlayer = MediaPlayer.create(this, R.raw.cave_theme);
@@ -203,17 +210,18 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         float car_X = car.getX();
         float car_Y = car.getY();
 
-        //turning screen controls car's motion
-        if(sensorEvent.values[0] < -4 && car_X + car_width + 280 <= screenWidth){
-            car.setX(car_X + 50);
-        }else if(sensorEvent.values[0] > 4 && car_X >= 0){
-            car.setX(car_X - 50);
-        }else if(sensorEvent.values[1] < -2 && car_Y - 50 >= 0){
-            car.setY(car_Y - 50);
-        }else if(sensorEvent.values[1] > 2 && car_Y + car_height + 350 <= screenHeight){
-            car.setY(car_Y + 50);
+        if(gyroEnable.isChecked()) {
+            //turning screen controls car's motion
+            if (sensorEvent.values[0] < -4 && car_X + car_width + 280 <= screenWidth) {
+                car.setX(car_X + 50);
+            } else if (sensorEvent.values[0] > 4 && car_X >= 0) {
+                car.setX(car_X - 50);
+            } else if (sensorEvent.values[1] < -2 && car_Y - 50 >= 0) {
+                car.setY(car_Y - 50);
+            } else if (sensorEvent.values[1] > 2 && car_Y + car_height + 350 <= screenHeight) {
+                car.setY(car_Y + 50);
+            }
         }
-
         //Log.d(TAG,"car Y:"+ car_Y + " height: "+ screenHeight);
     }
 
