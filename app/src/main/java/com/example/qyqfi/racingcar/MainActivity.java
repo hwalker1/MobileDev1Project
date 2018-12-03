@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.cave_theme);
+        mediaPlayer = MediaPlayer.create(this, R.raw.intro_loop);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 

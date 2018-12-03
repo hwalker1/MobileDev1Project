@@ -108,7 +108,8 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         buttonEnable = findViewById(R.id.ButtonEnabler);
 
         //Background music
-        songPlayer = MediaPlayer.create(this, R.raw.cave_theme);
+        songPlayer = MediaPlayer.create(this, R.raw.game_loop);
+
         songPlayer.setLooping(true);
         songPlayer.start();
 
@@ -281,11 +282,11 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
 
         if(!buttonEnable.isChecked()) {
             //turning screen controls car's motion
-            if (sensorEvent.values[0] < -4 && car_X + car_width + 150 <= screenWidth) { //prev 280 //175
+            if (sensorEvent.values[0] < -4 && car_X + car_width + 175 <= screenWidth) { //prev 280 //175
                 car.setX(car_X + 50);
             } else if (sensorEvent.values[0] > 4 && car_X >= 175) { //prev 0
                 car.setX(car_X - 50);
-            } else if (sensorEvent.values[1] < -2 && car_Y - 50 >= 0) {
+            } else if (sensorEvent.values[1] < -2 && car_Y - 150 >= 0) {
                 car.setY(car_Y - 50);
             } else if (sensorEvent.values[1] > 2 && car_Y + car_height + 350 <= screenHeight) {
                 car.setY(car_Y + 50);
