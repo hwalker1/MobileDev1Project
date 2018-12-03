@@ -10,6 +10,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.nfc.Tag;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,10 @@ import java.util.TimerTask;
 public class GameView extends AppCompatActivity implements SensorEventListener {
 
     private static final String TAG = "GameViewActivity";
+
+
+    //Audio Stuff
+    private MediaPlayer songPlayer, crashPlayer, gasPlayer;
 
     private SensorManager sensorManager;
     Sensor accelerometer;
@@ -90,6 +95,15 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
+
+        //Background music
+        songPlayer = MediaPlayer.create(this, R.raw.cave_theme);
+        songPlayer.setLooping(true);
+        songPlayer.start();
+
+        gasPlayer = MediaPlayer.create(this, R.raw.gas);
+        crashPlayer = MediaPlayer.create(this, R.raw.crash);
+
 
         //accelerometer sensor
         Log.d(TAG, "onCreate: Initializing Sensor Services");
@@ -256,20 +270,24 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
 
         setScore();
 
-        //if collide with car and its collidable then losehealth
+        //if collide with car and its collideable then losehealth
         if(Collision(car, carModelA, carModelA_col)){
+            crashPlayer.start();
             LoseHealth();
             carModelA_col = false;
         }
         if(Collision(car, carModelB, carModelB_col)){
+            crashPlayer.start();
             LoseHealth();
             carModelB_col = false;
         }
         if(Collision(car, carModelC, carModelC_col)){
+            crashPlayer.start();
             LoseHealth();
             carModelC_col = false;
         }
         if(Collision(car, carModelHealth, carModelHealth_col)){
+            gasPlayer.start();
             gainHealth();
             carModelHealth_col = false;
         }
