@@ -2,6 +2,7 @@ package com.example.qyqfi.racingcar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -22,6 +23,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -38,7 +40,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
 
 
     //gyro enable
-    private CheckBox gyroEnable;
+    private CheckBox buttonEnable;
 
     //Audio Stuff
     private MediaPlayer songPlayer, crashPlayer, gasPlayer;
@@ -47,7 +49,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     Sensor accelerometer;
 
     //control btn
-    private ImageButton leftButton, rightButton;
+    private ImageButton leftButton, rightButton, upButton, downButton;
     private ImageView car;
 
     //Life count & Score
@@ -99,9 +101,11 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_game_view);
 
-        gyroEnable = findViewById(R.id.GyroEnabler);
+        buttonEnable = findViewById(R.id.ButtonEnabler);
 
         //Background music
         songPlayer = MediaPlayer.create(this, R.raw.cave_theme);
@@ -120,6 +124,39 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         sensorManager.registerListener(GameView.this, accelerometer,SensorManager.SENSOR_DELAY_GAME);
         Log.d(TAG,"onCreate: Registered accelerometer listener");
 
+
+        buttonEnable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                if(isChecked){
+                    leftButton.setEnabled(true);
+                    leftButton.setVisibility(View.VISIBLE);
+                    rightButton.setEnabled(true);
+                    rightButton.setVisibility(View.VISIBLE);
+                    upButton.setEnabled(true);
+                    upButton.setVisibility(View.VISIBLE);
+                    downButton.setEnabled(true);
+                    downButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    leftButton.setEnabled(false);
+                    leftButton.setVisibility(View.INVISIBLE);
+                    rightButton.setEnabled(false);
+                    rightButton.setVisibility(View.INVISIBLE);
+                    upButton.setEnabled(false);
+                    upButton.setVisibility(View.INVISIBLE);
+                    downButton.setEnabled(false);
+                    downButton.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
+        );
+
+       // buttonEnable.setChecked(true);
+        //buttonEnable.setChecked(false);
+
+
+
         //control main car
         leftButton =  findViewById(R.id.leftButton);
         leftButton.setOnTouchListener(new View.OnTouchListener() {
@@ -136,8 +173,30 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         rightButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(car.getX() < 750){
+                if(car.getX() < 750 ){
                     moveRight();
+                }
+                return false;
+            }
+        });
+
+        upButton =  findViewById(R.id.upButton);
+        upButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(car.getY() > 200){
+                    moveUp();
+                }
+                return false;
+            }
+        });
+
+        downButton =  findViewById(R.id.downButton);
+        downButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(car.getY() < 1600){
+                    moveDown();
                 }
                 return false;
             }
@@ -185,6 +244,16 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         //set initial score
         scoreText.setText(""+score);
 
+
+        leftButton.setEnabled(false);
+        leftButton.setVisibility(View.INVISIBLE);
+        rightButton.setEnabled(false);
+        rightButton.setVisibility(View.INVISIBLE);
+        upButton.setEnabled(false);
+        upButton.setVisibility(View.INVISIBLE);
+        downButton.setEnabled(false);
+        downButton.setVisibility(View.INVISIBLE);
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -210,11 +279,11 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         float car_X = car.getX();
         float car_Y = car.getY();
 
-        if(gyroEnable.isChecked()) {
+        if(!buttonEnable.isChecked()) {
             //turning screen controls car's motion
-            if (sensorEvent.values[0] < -4 && car_X + car_width + 280 <= screenWidth) {
+            if (sensorEvent.values[0] < -4 && car_X + car_width + 150 <= screenWidth) { //prev 280 //175
                 car.setX(car_X + 50);
-            } else if (sensorEvent.values[0] > 4 && car_X >= 0) {
+            } else if (sensorEvent.values[0] > 4 && car_X >= 175) { //prev 0
                 car.setX(car_X - 50);
             } else if (sensorEvent.values[1] < -2 && car_Y - 50 >= 0) {
                 car.setY(car_Y - 50);
@@ -225,8 +294,21 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         //Log.d(TAG,"car Y:"+ car_Y + " height: "+ screenHeight);
     }
 
+  /*  public void updateButtons(){
+        if(buttonEnable.isChecked()){
+            leftButton.setEnabled(true);
+            leftButton.setVisibility(View.VISIBLE);
+        }
+        else{
+            leftButton.setEnabled(false);
+            leftButton.setVisibility(View.INVISIBLE);
+        }
+    }*/
+
     //change model cars position
     public void changePos(){
+        //updateButtons();
+
         //speed control
         carModelA_Y += 10;
         carModelB_Y += 20;
@@ -317,6 +399,13 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
         car.setX((car.getX() + 35));
     }
 
+    public void moveUp(){
+        car.setY((car.getY() - 35));
+    }
+
+    public void moveDown(){
+        car.setY((car.getY() + 35));
+    }
     public boolean Collision(ImageView car, ImageView traffic, boolean collidable ) //todo fix multithread problem (still lose health on quit screen)
     {
         Rect carRect = new Rect();
