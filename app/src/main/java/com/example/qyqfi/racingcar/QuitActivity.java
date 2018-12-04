@@ -12,6 +12,8 @@ public class QuitActivity extends AppCompatActivity {
 
     private TextView score_tv;
     private ImageButton playButton;
+    private ImageButton settingButton;
+
     private ImageButton highScoreButton;
     DatabaseHelper myDB;
     @Override
@@ -26,6 +28,13 @@ public class QuitActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openGameActivity();
+            }
+        });
+        settingButton = (ImageButton) findViewById(R.id.settingBtn);
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSettingActivity();
             }
         });
 
@@ -47,6 +56,10 @@ public class QuitActivity extends AppCompatActivity {
     public void openGameActivity(){
         Intent intent = new Intent(this, GameView.class);
         finish();
+        startActivity(intent);
+    }
+    public void openSettingActivity(){
+        Intent intent = new Intent(this,  SettingsActivity.class);
         startActivity(intent);
     }
 
