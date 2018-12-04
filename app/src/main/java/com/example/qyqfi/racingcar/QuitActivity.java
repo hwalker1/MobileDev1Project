@@ -11,6 +11,8 @@ public class QuitActivity extends AppCompatActivity {
 
     private TextView score_tv;
     private ImageButton playButton;
+    private ImageButton settingButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,13 @@ public class QuitActivity extends AppCompatActivity {
                 openGameActivity();
             }
         });
+        settingButton = (ImageButton) findViewById(R.id.settingBtn);
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSettingActivity();
+            }
+        });
 
         //set text to Score TextView
         score_tv = (TextView) findViewById(R.id.score_textView);
@@ -32,6 +41,10 @@ public class QuitActivity extends AppCompatActivity {
     public void openGameActivity(){
         Intent intent = new Intent(this, GameView.class);
         finish();
+        startActivity(intent);
+    }
+    public void openSettingActivity(){
+        Intent intent = new Intent(this,  SettingsActivity.class);
         startActivity(intent);
     }
 }
