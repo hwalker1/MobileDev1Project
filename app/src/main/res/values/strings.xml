@@ -6,4 +6,11 @@
     <string name="scoreBtn">score Btn</string>
     <string name="settingBtn">setting Btn</string>
     <string name="car_model">car model</string>
+    <string name="setting_desc_1">Game Development / Design</string>
+    <string name="setting_desc_name_1">Henry</string>
+    <string name="setting_desc_name_2">Yuqing</string>
+    <string name="setting_desc_2">Back End development</string>
+    <string name="setting_desc_name_3">Meriton</string>
+    <string name="setting_desc_3">Please provide feed back</string>
+    <string name="setting_submit_btn">submit</string>
 </resources>
