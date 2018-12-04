@@ -40,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*highScoreButton = (ImageButton) findViewById(R.id.showScoreBtn);
+        highScoreButton = (ImageButton) findViewById(R.id.showScoreBtn);
         highScoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openHighScoreActivity();
             }
-        });*/
+        });
     }
 
     public void openGameActivity(){
@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*public void openHighScoreActivity() {
-        Intent intent = new Intent(this, HighscoreMain.class);
+    public void openHighScoreActivity() {
+        Intent intent = new Intent(this, HighscoreView.class);
         startActivity(intent);
-    }*/
+    }
 }

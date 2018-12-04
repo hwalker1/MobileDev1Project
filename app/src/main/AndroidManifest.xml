@@ -19,7 +19,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".GameView" />
         <activity android:name=".QuitActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".HighscoreView" />
     </application>
 
 </manifest>
