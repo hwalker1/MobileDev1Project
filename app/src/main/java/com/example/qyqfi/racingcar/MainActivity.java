@@ -12,11 +12,13 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton playButton;
     private ImageButton highScoreButton;
     private MediaPlayer mediaPlayer;
+    private ImageButton settingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         playButton = (ImageButton) findViewById(R.id.playBtn);
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
+        settingButton = (ImageButton) findViewById(R.id.settingBtn);
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSettingActivity();
+            }
+        });
+
         /*highScoreButton = (ImageButton) findViewById(R.id.showScoreBtn);
         highScoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
     public void openGameActivity(){
         mediaPlayer.stop();
         Intent intent = new Intent(this,  GameView.class);
+        startActivity(intent);
+    }
+
+
+    public void openSettingActivity(){
+        Intent intent = new Intent(this,  SettingsActivity.class);
         startActivity(intent);
     }
 
