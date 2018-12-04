@@ -30,6 +30,15 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/fuel" />
 
+        <CheckBox
+            android:id="@+id/ButtonEnabler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="122dp"
+            android:text="Button mode" />
+
         <ImageView
             android:id="@+id/score"
             android:layout_width="wrap_content"
@@ -100,8 +109,8 @@
 
             <ImageView
                 android:id="@+id/road"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/road" />
 
 
@@ -157,9 +166,18 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:contentDescription="@string/scoreBtn"
                 android:alpha="0.5"
                 app:srcCompat="@drawable/leftbutton" />
+
+            <ImageButton
+                android:id="@+id/upButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_above="@+id/leftButton"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center_vertical"
+                android:alpha="0.5"
+                app:srcCompat="@drawable/upbutton" />
 
             <ImageButton
                 android:id="@+id/rightButton"
@@ -168,8 +186,16 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:alpha="0.5"
-                android:contentDescription="@string/scoreBtn"
                 app:srcCompat="@drawable/rightbutton" />
+
+            <ImageButton
+                android:id="@+id/downButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_above="@+id/leftButton"
+                android:layout_alignParentEnd="true"
+                android:alpha="0.5"
+                app:srcCompat="@drawable/downbutton" />
         </RelativeLayout>
     </FrameLayout>
 </LinearLayout>
