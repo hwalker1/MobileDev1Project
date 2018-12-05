@@ -54,10 +54,9 @@ public class HighscoreView extends AppCompatActivity {
                     {
                         Integer val1 = Integer.parseInt(s1);
                         Integer val2 = Integer.parseInt(s2);
-                        return val1.compareTo(val2);
+                        return val2.compareTo(val1);
                     }
                 });
-
                 ListAdapter listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,theList);
                 listView.setAdapter(listAdapter);
             }
