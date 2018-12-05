@@ -13,4 +13,5 @@
     <string name="setting_desc_name_3">Meriton</string>
     <string name="setting_desc_3">Please provide feed back</string>
     <string name="setting_submit_btn">submit</string>
+    <string name="hs_title">HIGHSCORE</string>
 </resources>
