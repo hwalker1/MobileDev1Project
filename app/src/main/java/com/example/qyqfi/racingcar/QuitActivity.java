@@ -1,6 +1,7 @@
 package com.example.qyqfi.racingcar;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,7 +14,7 @@ public class QuitActivity extends AppCompatActivity {
     private TextView score_tv;
     private ImageButton playButton;
     private ImageButton settingButton;
-
+    private MediaPlayer mediaPlayer;
     private ImageButton highScoreButton;
     DatabaseHelper myDB;
     @Override
@@ -22,6 +23,10 @@ public class QuitActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quit);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.intro_loop);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
 
         playButton = (ImageButton) findViewById(R.id.playBtn);
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -54,22 +59,24 @@ public class QuitActivity extends AppCompatActivity {
     }
 
     public void openGameActivity(){
+        mediaPlayer.stop();
         Intent intent = new Intent(this, GameView.class);
         finish();
         startActivity(intent);
     }
     public void openSettingActivity(){
+        mediaPlayer.stop();
         Intent intent = new Intent(this,  SettingsActivity.class);
         startActivity(intent);
     }
 
     public void openHighScoreActivity() {
+        mediaPlayer.stop();
         Intent intent = new Intent(this, HighscoreView.class);
         startActivity(intent);
     }
 
     public void AddData(String newEntry) {
-
         boolean insertData = myDB.addData(newEntry);
 
         if(insertData==true){

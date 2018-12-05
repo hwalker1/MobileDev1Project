@@ -24,7 +24,7 @@ public class HighscoreView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.intro_loop);
+        mediaPlayer = MediaPlayer.create(this, R.raw.leaderboards_loop);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
@@ -63,6 +63,15 @@ public class HighscoreView extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (this.isFinishing()){
+            mediaPlayer.stop();
+
+        }
     }
 
 }

@@ -466,6 +466,7 @@ public class GameView extends AppCompatActivity implements SensorEventListener {
 
     public void openQuitActivity(){
         String scoreValue = scoreText.getText().toString();
+        songPlayer.stop();
         Intent intent = new Intent(this, QuitActivity.class);
         intent.putExtra("SCORE",scoreValue);
         finish();

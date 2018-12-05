@@ -57,11 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void openSettingActivity(){
+        mediaPlayer.stop();
         Intent intent = new Intent(this,  SettingsActivity.class);
         startActivity(intent);
     }
 
     public void openHighScoreActivity() {
+        mediaPlayer.stop();
         Intent intent = new Intent(this, HighscoreView.class);
         startActivity(intent);
     }
